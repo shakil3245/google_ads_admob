@@ -1,17 +1,29 @@
+import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdService {
-
-  static const String _bannerAdUnitId =
+  // Real production IDs
+  static const String _bannerAdUnitIdProd =
       'ca-app-pub-6362707004035143/3675920775';
-
-  static const String _interstitialAdUnitId =
+  static const String _interstitialAdUnitIdProd =
       'ca-app-pub-6362707004035143/7263811998';
+
+  // Test IDs
+  static const String _bannerAdUnitIdTest =
+      'ca-app-pub-3940256099942544/6300978111';
+  static const String _interstitialAdUnitIdTest =
+      'ca-app-pub-3940256099942544/1033173712';
+
+  String get bannerAdUnitId =>
+      kDebugMode ? _bannerAdUnitIdTest : _bannerAdUnitIdProd;
+
+  String get interstitialAdUnitId =>
+      kDebugMode ? _interstitialAdUnitIdTest : _interstitialAdUnitIdProd;
 
   /// Banner
   BannerAd createBannerAd() {
     return BannerAd(
-      adUnitId: _bannerAdUnitId,
+      adUnitId: bannerAdUnitId,
       size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
@@ -29,7 +41,7 @@ class AdService {
     InterstitialAd? interstitialAd;
 
     await InterstitialAd.load(
-      adUnitId: _interstitialAdUnitId,
+      adUnitId: interstitialAdUnitId,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {

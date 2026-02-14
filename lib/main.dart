@@ -10,6 +10,11 @@ import 'Core/ad_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  RequestConfiguration configuration = RequestConfiguration(
+    testDeviceIds: ['5928676740147D586E27BAE50B02F4FB'],
+  );
+  MobileAds.instance.updateRequestConfiguration(configuration);
   await MobileAds.instance.initialize();
 
   runApp(

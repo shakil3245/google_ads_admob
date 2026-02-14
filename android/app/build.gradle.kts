@@ -24,8 +24,8 @@ android {
         applicationId = "com.example.the_dummy_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 21
+        targetSdk = 33
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
@@ -38,7 +38,13 @@ android {
         }
     }
 }
+dependencies {
+    // Flutter dependencies
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
 
+    // Google Mobile Ads SDK
+    implementation("com.google.android.gms:play-services-ads:22.2.0")
+}
 flutter {
     source = "../.."
 }

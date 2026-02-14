@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'ad_providers.dart';
 import 'banner_ad_widget.dart';
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -25,11 +24,12 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () async {
-              await adProvider.loadInterstitial();
-              adProvider.showInterstitial();
+            onPressed: () {
+              final adProvider = context.read<AdProvider>();
+              adProvider.showInterstitial(); // only shows if already loaded
+              // Optionally preload next interstitial inside showInterstitial
             },
-            child: const Text("Show Interstitial Ad"),
+            child: Text('Show Interstitial Ad'),
           ),
           const Spacer(),
           const BannerAdWidget(),

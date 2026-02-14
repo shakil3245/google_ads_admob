@@ -11,10 +11,11 @@ class AdProvider extends ChangeNotifier {
   InterstitialAd? _interstitialAd;
 
   bool _isInterstitialLoading = false;
+  bool isInterstitialReady = false; // New flag
 
   AdProvider(this._adService) {
     loadBanner();
-    loadInterstitial(); // Preload
+    loadInterstitial(); // preload
   }
 
   void loadBanner() {
@@ -24,19 +25,28 @@ class AdProvider extends ChangeNotifier {
 
   Future<void> loadInterstitial() async {
     if (_isInterstitialLoading) return;
-
     _isInterstitialLoading = true;
+    isInterstitialReady = false;
+
     _interstitialAd = await _adService.loadInterstitialAd();
     _isInterstitialLoading = false;
+
+    if (_interstitialAd != null) {
+      isInterstitialReady = true;
+      notifyListeners();
+    }
   }
 
   void showInterstitial() {
     if (_interstitialAd != null) {
       _interstitialAd!.show();
       _interstitialAd = null;
+      isInterstitialReady = false;
+      notifyListeners();
       loadInterstitial(); // preload next
     } else {
       print("Interstitial not ready");
+      loadInterstitial(); // try loading again
     }
   }
 
